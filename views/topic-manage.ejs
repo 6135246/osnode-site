@@ -16,10 +16,10 @@
 			<% topics.forEach(function(tpc) { %>
 			<tr>
 				<td><div class="text-center"><%= tpc.id %></div></td>
-				<td><div class="text-center"><%= catgValue(tpc.catg) %></div></td>
+				<td><div class="text-center"><a href="/topic/manage/?t=<%= tpc.catg %>&p=<%= page %>"><%= catgValue(tpc.catg) %></a></div></td>
 				<td><a href="/user/view/<%= tpc.poster_id %>"><%= tpc.poster_name %></a></td>
-				<td><a href="/topic/view/<%= tpc.id %>"><%= tpc.title %></a></td>
-				<td><div class="text-center"><%= tpc.gmt_modify %></div></td>
+				<td><a href="/topic/view/<%= tpc.id %>/?v=full"><%= tpc.title %></a></td>
+				<td><div class="text-center"><%= dateFormat(tpc.gmt_modify) %></div></td>
 			</tr>
 			<% }); %>
 		</tbody>

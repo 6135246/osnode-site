@@ -6,6 +6,7 @@ var log = require('../lib/log');
 var Topic = require('../models/topic');
 var enms = require('../lib/enms');
 var EventProxy = require('eventproxy');
+var dateformat = require('dateformat');
 
 /**
  * 增加或是更新主题信息<br/> 请求JSON数据：
@@ -42,7 +43,7 @@ exports.store = function(request, response) {
 	topic.content = body.content;
 
 	if(topic.id <= 0) {
-		log.info("新增主题:\n" + require('util').inspect(topic));
+		// log.info("新增主题:\n" + require('util').inspect(topic));
 		Topic.insert(topic, function(results) {
 			log.info("新增主题成功:\n" + require('util').inspect(results));
 			topic.id = results.insertId;
@@ -53,7 +54,7 @@ exports.store = function(request, response) {
 			});
 		});
 	} else {
-		log.info("更新主题:\n" + require('util').inspect(topic));
+		// log.info("更新主题:\n" + require('util').inspect(topic));
 		Topic.update(topic, function(results) {
 			log.info("更新主题成功:\n" + require('util').inspect(results));
 
@@ -92,7 +93,7 @@ exports.create = function(request, response) {
  */
 exports.update = function(request, response) {
 	var tpcId = request.params.id;
-	log.info("更新主题: " + tpcId);
+	// log.info("更新主题: " + tpcId);
 };
 
 /**
@@ -100,17 +101,35 @@ exports.update = function(request, response) {
  */
 exports.view = function(request, response) {
 	var tpcId = request.params.id;
-	log.info("查看主题: " + tpcId);
+
+	var data = {
+		title: '查看主题',
+		url: request.path,
+		breadcrumbs: [{
+			label: "主页",
+			href: "/"
+		}, {
+			label: "主题管理",
+			href: "/topic/manage"
+		}, {
+			label: '查看主题'
+		}],
+		tpcId: tpcId
+	};
 
 	Topic.findID(tpcId, function(results) {
-		log.info("主题信息: " + require('util').inspect(results));
+		// log.info("主题信息: " + require('util').inspect(results));
 
-		var data = {};
 		if(results.length > 0) {
 			data.topic = results[0];
 		}
 
-		response.render('topic-view', data);
+		var vt = request.query.v;
+		if(vt) {
+			response.render('topic-view-' + vt, data);
+		} else {
+			response.render('topic-view-lean', data);
+		}
 	});
 };
 
@@ -129,6 +148,9 @@ exports.manage = function(request, response) {
 		}],
 		catgValue: function(catg) {
 			return enms.topicCatgValue(catg);
+		},
+		dateFormat: function(date) {
+			return dateformat(date, "yyyy-mm-dd hh:MM:ss");
 		}
 	};
 
@@ -171,7 +193,7 @@ exports.manage = function(request, response) {
 		data.count = count;
 		data.topics = topics;
 
-		log.info("结果数据: " + require('util').inspect(data));
+		// log.info("结果数据: " + require('util').inspect(data));
 
 		// 返回页面
 		response.render('topic-manage', data);

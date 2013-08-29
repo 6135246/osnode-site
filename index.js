@@ -3,9 +3,6 @@
  */
 var config = require('./config');
 var express = require('express');
-var routes = require('./routes');
-var user = require('./routes/user');
-var topic = require('./routes/topic');
 var http = require('http');
 var path = require('path');
 
@@ -17,7 +14,9 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.favicon());
 app.use(express.logger('dev'));
-app.use(express.bodyParser());
+app.use(express.bodyParser({
+	uploadDir: config.uploadPath
+}));
 app.use(express.methodOverride());
 app.use(express.cookieParser('atom-nodejs-server'));
 app.use(express.session());
@@ -30,11 +29,20 @@ if('development' == app.get('env')) {
 }
 
 // 路由配置
+var routes = require('./routes');
 app.get('/', routes.index);
+
+var user = require('./routes/user');
 app.get('/users', user.list);
 app.get('/users2', user.list2);
 
+/* 文件配置 */
+var file = require('./routes/file');
+app.get('/file/select', file.select);
+app.post('/file/upload', file.upload);
+
 /* 主题信息 */
+var topic = require('./routes/topic');
 app.get('/topic/create', topic.create);
 app.get('/topic/view/:id', topic.view);
 app.get('/topic/update/:id', topic.update);
