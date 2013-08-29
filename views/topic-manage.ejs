@@ -1,0 +1,42 @@
+<% include ./inc/inc-tmpt-head %>
+<% if (typeof(topics) === "undefined" || topics.length <= 0) { %>
+	<div class="alert alert-info">哎呀，还没有任何主题信息，请先<strong><a href="/topic/create">创建</a></strong>一个吧！</div>
+<% } else { %>
+	<table class="table table-striped table-bordered table-hover">
+		<thead>
+			<tr>
+				<th class="span1"><div class="text-center">#</div></th>
+				<th class="span2"><div class="text-center">类型</div></th>
+				<th class="span2">创建人</th>
+				<th>标题</th>
+				<th class="span3 text-center"><div class="text-center">更新时间</div></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% topics.forEach(function(tpc) { %>
+			<tr>
+				<td><div class="text-center"><%= tpc.id %></div></td>
+				<td><div class="text-center"><%= catgValue(tpc.catg) %></div></td>
+				<td><a href="/user/view/<%= tpc.poster_id %>"><%= tpc.poster_name %></a></td>
+				<td><a href="/topic/view/<%= tpc.id %>"><%= tpc.title %></a></td>
+				<td><div class="text-center"><%= tpc.gmt_modify %></div></td>
+			</tr>
+			<% }); %>
+		</tbody>
+	</table>
+	<div class="pagination pagination-right">
+		<ul>
+			<% pages.forEach(function(p) { %>
+			<% if (p == page) { %>
+				<li class="active"><a href="javascript:void(0);"><%= p %></a></li>
+			<% } else { %>
+				<% if (typeof(catg) === "undefined") { %>
+					<li><a href="/topic/manage?p=<%= p %>"><%= p %></a></li>
+				<% } else { %>
+					<li><a href="/topic/manage?t=<%= catg %>&p=<%= p %>"><%= p %></a></li>
+			<% }}}); %>
+		</ul>
+	</div>
+<% } %>
+
+<% include ./inc/inc-tmpt-foot %>

@@ -1,0 +1,59 @@
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container-fluid">
+			<a class="brand" href="/"><span class="icon-home"></span> 移动分享</a>
+			<div class="nav-collapse collapse">
+				<ul class="nav" role="navigation">
+					<li class="dropdown"><a id="drop-control" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">控制面板 <b class="caret"></b></a>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="drop-control">
+							<li><a href="/"><span class="icon-home"></span> 系统管理</a></li>
+							<li class="divider"></li>
+							<li class="dropdown-submenu"><a href="#"><span class="icon-user"></span> 用户管理</a>
+								<ul class="dropdown-menu">
+									<li><a href="/web/user/create">新增用户</a></li>
+									<li><a href="/web/user/manage">用户管理</a></li>
+								</ul></li>
+							<li class="dropdown-submenu"><a href="#"><span class="icon-th-list"></span> 主题管理</a>
+								<ul class="dropdown-menu">
+									<li><a href="/web/topic/create">新增主题</a></li>
+									<li><a href="/web/topic/manage">主题管理</a></li>
+								</ul></li>
+						</ul></li>
+					<li class="divider-vertical"></li>
+					<li>
+						<form class="navbar-form">
+							<input type="text" class="span2" placeholder="输入关键字">
+							<button type="submit" class="btn">搜索</button>
+						</form>
+					</li>
+					<li class="divider-vertical"></li>
+				</ul>
+				<ul class="nav pull-right">
+					<li class="divider-vertical"></li>
+					<li>
+						<form class="navbar-form">
+							<input class="span2" type="text" placeholder="用户名" /> <input class="span1" type="password" placeholder="密码" />
+							<button type="submit" class="btn">登录</button>
+						</form>
+					</li>
+					<li class="divider-vertical"></li>
+					<li class="btn-group">
+						<button class="btn">我的信息(${WebUtils.findLoginedUser().name})</button>
+						<button class="btn dropdown-toggle" data-toggle="dropdown">
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a href="#">我的信息</a></li>
+							<li><a href="#">修改信息</a></li>
+							<li><a href="#">重置密码</a></li>
+							<li class="divider"></li>
+							<li><a href="#">退出登录</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+			<!--/.nav-collapse -->
+		</div>
+	</div>
+</div>
+<!-- /.navbar -->
