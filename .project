@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>atom-nodejs-server</name>
-	<comment>atom-nodejs-server</comment>
+	<name>aliapp-nodejs</name>
+	<comment>aliapp-nodejs</comment>
 	<projects>
 	</projects>
 	<buildSpec>
