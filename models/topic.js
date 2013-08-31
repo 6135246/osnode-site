@@ -93,6 +93,30 @@ exports.findPage = function(args, handler) {
 	});
 };
 
+exports.findList = function(args, handler) {
+	db.execQuery({
+		"sql": "SELECT * FROM atom_topic ORDER BY id DESC LIMIT ?,?",
+		args: [args.offset, args.limit],
+		"handler": handler
+	});
+};
+
+exports.findTopVisits = function(args, handler) {
+	db.execQuery({
+		"sql": "SELECT * FROM atom_topic ORDER BY visit_count DESC, id DESC LIMIT 5",
+		args: [args.offset, args.limit],
+		"handler": handler
+	});
+};
+
+exports.findTopReplys = function(args, handler) {
+	db.execQuery({
+		"sql": "SELECT * FROM atom_topic ORDER BY reply_count DESC, id DESC LIMIT 5",
+		args: [args.offset, args.limit],
+		"handler": handler
+	});
+};
+
 /**
  * DAO: findMinID
  */

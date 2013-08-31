@@ -18,7 +18,7 @@ app.use(express.bodyParser({
 	uploadDir: config.uploadPath
 }));
 app.use(express.methodOverride());
-app.use(express.cookieParser('atom-nodejs-server'));
+app.use(express.cookieParser('aliapp-nodejs'));
 app.use(express.session());
 app.use(app.router);
 app.use(express.static(path.join(__dirname, 'public')));
@@ -28,9 +28,10 @@ if('development' == app.get('env')) {
 	app.use(express.errorHandler());
 }
 
-// 路由配置
-var routes = require('./routes');
-app.get('/', routes.index);
+/* 前台页面 */
+var front = require('./routes/front');
+app.get('/', front.index);
+app.get('/index.html', front.index);
 
 var user = require('./routes/user');
 app.get('/users', user.list);

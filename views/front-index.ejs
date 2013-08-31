@@ -1,0 +1,58 @@
+<% include ./inc/inc-front-head %>
+<div class="blog">
+	<div class="container">
+		<div class="row">
+			<div class="span8">
+				<div class="entry-ads">
+					<% include ./inc/inc-adv01 %>
+				</div>
+				<% topics.forEach(function(tpc) { %>
+				<div class="entry">
+					<h4>
+						<a href="/topic/view/<%= tpc.id %>/?v=full" rel="bookmark"><%= tpc.title %></a>
+					</h4>
+					<p><%= tpc.summary %> [&hellip;]</p>
+					<div class="clearfix"></div>
+					<p class="meta">
+						<i class="icon-calendar"></i> <%= dateFormat(tpc.gmt_modify) %> - <i class="icon-user"></i> 老牛啊 <a href="/topic/view/<%= tpc.id %>/?v=full" class="pull-right readmore">阅读全文 &raquo;</a>
+					</p>
+					<div class="clearfix"></div>
+				</div>
+				<% }); %>
+				<div class="entry-ads">
+					<% include ./inc/inc-adv02 %>
+				</div>
+				<!--
+					<div class="pagination">
+						<span class='page-numbers current'>1</span> <a class='page-numbers' href=''>2</a> <span class="page-numbers dots">&hellip;</span> <a class='page-numbers' href=''>6</a> <a class="next page-numbers" href="">Next</a>
+					</div>
+					-->
+			</div>
+			<div class="span4">
+				<div class="sidebar">
+					<div class="widget">
+						<h3>推荐排行榜Top5</h3>
+						<ul>
+							<% topVisits.forEach(function(tpc) { %>
+							<li><a href="/topic/view/<%= tpc.id %>/?v=full" rel="bookmark"><%= tpc.title %></a></li>
+							<% }); %>
+						</ul>
+					</div>
+					<div class="widget-ads">
+						<% include ./inc/inc-adv51 %>
+						<div class="clearfix"></div>
+					</div>
+					<div class="widget">
+						<h3>评论排行榜Top5</h3>
+						<ul>
+							<% topReplys.forEach(function(tpc) { %>
+							<li><a href="/topic/view/<%= tpc.id %>/?v=full" rel="bookmark"><%= tpc.title %></a></li>
+							<% }); %>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<% include ./inc/inc-front-foot %>
