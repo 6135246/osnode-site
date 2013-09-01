@@ -12,7 +12,7 @@ var fields_all = "id, state, catg, topt, rflag, rfrom, visit, reply, title, summ
  */
 exports.updateVisit = function(id, handler) {
 	db.execQuery({
-		"sql": "UPDATE atom_topic SET visit=visit+1 WHERE id=?)",
+		"sql": "UPDATE atom_topic SET visit=visit+1 WHERE id=?",
 		"args": [id],
 		"handler": handler
 	});
@@ -23,7 +23,7 @@ exports.updateVisit = function(id, handler) {
  */
 exports.updateReply = function(id, handler) {
 	db.execQuery({
-		"sql": "UPDATE atom_topic SET reply=reply+1 WHERE id=?)",
+		"sql": "UPDATE atom_topic SET reply=reply+1 WHERE id=?",
 		"args": [id],
 		"handler": handler
 	});

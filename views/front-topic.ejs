@@ -1,0 +1,50 @@
+<% include ./inc/inc-front-head %>
+<div class="blog">
+	<div class="container">
+		<div class="row">
+			<div class="span8">
+				<div class="entry">
+					<h2><%= topic.title||'' %></h2>
+					<p class="meta">
+						<i class="icon-calendar"></i> <%= dateFormat(topic.gmt_modify) %> - <i class="icon-user"></i> 老牛啊 - <i class="icon-film"></i> <%= topic.visit %> - <i class="icon-comment"></i> <a href="#respond"><%= topic.reply %></a>
+					</p>
+					<p><%= topic.summary||'' %></p>
+					<p><%- topic.content||'' %></p>
+				</div>
+				<div id="commentsy" class="comments">
+					<a name="respond" />
+					<div class="section">
+						<div>
+							<div class="title">
+								<h3>发表评论</h3>
+							</div>
+							<div>
+								<form action="" method="post">
+									<div id="comment-input">
+										<label>命名 (Required)</label> <input type="text" name="author" id="author" tabindex="1" class="input-large" /> <label>Email (Required)</label> <input type="text" name="email" id="email" tabindex="2" class="input-large" /> <label>Website</label> <input type="text" name="url" id="url" tabindex="3" class="input-large" />
+									</div>
+									<div id="comment-textarea">
+										<label>Comment</label>
+										<textarea name="comment" id="comment" rows="4" tabindex="4" class="textarea-comment  input-xlarge"></textarea>
+									</div>
+									<div id="comment-submit">
+										<p>
+										<div>
+											<input name="submit" type="submit" id="submit" tabindex="5" value="Post Comment" class="btn" />
+										</div>
+										</p>
+										<input type='hidden' name='comment_post_ID' value='802' id='comment_post_ID' /> <input type='hidden' name='comment_parent' id='comment_parent' value='0' />
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="span4">
+				<% include ./inc/inc-front-slide %>
+			</div>
+		</div>
+	</div>
+</div>
+<% include ./inc/inc-front-foot %>

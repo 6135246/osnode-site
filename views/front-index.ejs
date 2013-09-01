@@ -9,12 +9,12 @@
 				<% topics.forEach(function(tpc) { %>
 				<div class="entry">
 					<h4>
-						<a href="/topic/view/<%= tpc.id %>/?v=full" rel="bookmark"><%= tpc.title %></a>
+						[<a href="./topic-<%= tpc.catg %>.html"><%= catgValue(tpc.catg) %></a>] <a href="./topic-<%= tpc.catg %>-<%= tpc.id %>.html" rel="bookmark"><%= tpc.title %></a>
 					</h4>
 					<p><%= tpc.summary %> [&hellip;]</p>
 					<div class="clearfix"></div>
 					<p class="meta">
-						<i class="icon-calendar"></i> <%= dateFormat(tpc.gmt_modify) %> - <i class="icon-user"></i> 老牛啊 <a href="/topic/view/<%= tpc.id %>/?v=full" class="pull-right readmore">阅读全文 &raquo;</a>
+						<i class="icon-calendar"></i> <%= dateFormat(tpc.gmt_modify) %> - <i class="icon-user"></i> 老牛啊 - <i class="icon-film"></i> <%= tpc.visit %> - <i class="icon-comment"></i> <a href="./topic-<%= tpc.catg %>-<%= tpc.id %>.html#respond"><%= tpc.reply %></a> <a href="./topic-<%= tpc.catg %>-<%= tpc.id %>.html" class="pull-right readmore">阅读全文 &raquo;</a>
 					</p>
 					<div class="clearfix"></div>
 				</div>
@@ -29,28 +29,7 @@
 					-->
 			</div>
 			<div class="span4">
-				<div class="sidebar">
-					<div class="widget">
-						<h3>推荐排行榜Top5</h3>
-						<ul>
-							<% topVisits.forEach(function(tpc) { %>
-							<li><a href="/topic/view/<%= tpc.id %>/?v=full" rel="bookmark"><%= tpc.title %></a></li>
-							<% }); %>
-						</ul>
-					</div>
-					<div class="widget-ads">
-						<% include ./inc/inc-adv51 %>
-						<div class="clearfix"></div>
-					</div>
-					<div class="widget">
-						<h3>评论排行榜Top5</h3>
-						<ul>
-							<% topReplys.forEach(function(tpc) { %>
-							<li><a href="/topic/view/<%= tpc.id %>/?v=full" rel="bookmark"><%= tpc.title %></a></li>
-							<% }); %>
-						</ul>
-					</div>
-				</div>
+				<% include ./inc/inc-front-slide %>
 			</div>
 		</div>
 	</div>

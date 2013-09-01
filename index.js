@@ -38,6 +38,8 @@ app.get('/index.html', front.index);
 app.get('/index-:catg-:page.html', front.index);
 app.get('/index-:catg.html', front.index);
 
+app.get('/topic-:catg-:id.html', front.topic);
+
 /* 用户页面 */
 var user = require('./routes/user');
 app.get('/users', user.list);
