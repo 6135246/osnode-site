@@ -3,35 +3,81 @@
  */
 var config = require('../config');
 var log = require('../lib/log');
-var Topic = require('../models/topic');
+var Topic = require('../models/topic-front');
 var enms = require('../lib/enms');
 var EventProxy = require('eventproxy');
 var dateformat = require('dateformat');
 
 /**
- * 首页
+ * 关于
  */
-exports.index = function(request, response) {
+exports.about = function(request, response) {
 	var data = {
 		title: '最新 Java/Node.js/Spring/MySQL/数据库 技术博客',
-		module: 'index',
+		catg: 'about',
 		url: request.path,
-		
+
 		dateFormat: function(date) {
 			return dateformat(date, "yyyy-mm-dd");
 		}
 	};
 
-	// 分页信息
-	var pageSize = config.pageSize || 30;
-	var pageNo = request.query.p || 1;
-	pageNo = (pageNo < 1) ? 1 : pageNo;
+	// 返回页面
+	response.render('front-about', data);
+};
 
-	var args = {
-		offset: (pageNo - 1) * pageSize,
-		limit: pageSize
+/**
+ * 美图
+ */
+exports.album = function(request, response) {
+	var data = {
+		title: '最新 Java/Node.js/Spring/MySQL/数据库 技术博客',
+		catg: 'album',
+		url: request.path,
+
+		dateFormat: function(date) {
+			return dateformat(date, "yyyy-mm-dd");
+		}
 	};
+
+	// 返回页面
+	response.render('front-album', data);
+};
+
+/**
+ * 首页-列表
+ */
+exports.index = function(request, response) {
+	log.info("Web请求：" + require('util').inspect(request));
 	
+	var data = {
+		catg: 'index',
+		title: '最新 Java/Node.js/Spring/MySQL/数据库 技术博客',
+		url: request.path,
+
+		dateFormat: function(date) {
+			return dateformat(date, "yyyy-mm-dd");
+		}
+	};
+
+	// SQL参数
+	var args = {};
+
+	// 请求参数
+	var catg = request.params.catg;
+	if(catg) {
+		data.catg = catg;
+		args.catgs = [catg];
+	}
+
+	var pageSize = config.pageSize || 30;
+	var pageNo = request.params.page || 1;
+	args.page = (pageNo < 1) ? 1 : pageNo;
+	args.offset = (pageNo - 1) * pageSize;
+	args.limit = pageSize;
+	
+	log.info("SQL参数：" + require('util').inspect(args));
+
 	// 并行处理
 	var ep = EventProxy.create("topics", "topVisits", "topReplys", function(topics, topVisits, topReplys) {
 		// 数据
@@ -40,8 +86,6 @@ exports.index = function(request, response) {
 		data.topVisits = topVisits;
 		data.topReplys = topReplys;
 
-		// log.info("结果数据: " + require('util').inspect(data));
-
 		// 返回页面
 		response.render('front-index', data);
 	});
@@ -49,11 +93,11 @@ exports.index = function(request, response) {
 	Topic.findList(args, function(results) {
 		ep.emit("topics", results);
 	});
-	
+
 	Topic.findTopVisits(args, function(results) {
 		ep.emit("topVisits", results);
 	});
-	
+
 	Topic.findTopReplys(args, function(results) {
 		ep.emit("topReplys", results);
 	});

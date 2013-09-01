@@ -30,9 +30,15 @@ if('development' == app.get('env')) {
 
 /* 前台页面 */
 var front = require('./routes/front');
+app.get('/about.html', front.about);
+app.get('/album.html', front.album);
+
 app.get('/', front.index);
 app.get('/index.html', front.index);
+app.get('/index-:catg-:page.html', front.index);
+app.get('/index-:catg.html', front.index);
 
+/* 用户页面 */
 var user = require('./routes/user');
 app.get('/users', user.list);
 app.get('/users2', user.list2);

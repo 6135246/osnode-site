@@ -8,7 +8,7 @@ module.exports = {
 	'user': 'r631obullxl',
 	'password': 'rd828439b',
 	'charset': 'UTF8',
-	'maxConnLimit': 10,
+	'maxConnLimit': 5,
 	'uploadPath': './public/upload/',
 	'appPort': 10080,
 	'pageSize': 30

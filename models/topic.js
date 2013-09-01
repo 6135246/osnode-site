@@ -1,19 +1,11 @@
-/*
- * Topic model
- */
-exports.model = function() {
-	return {
-		"id": "",
-		"firstname": "",
-		"lastname": "",
-		"message": ""
-	};
-};
-
 /**
  * 模块依赖
  */
 var db = require("../lib/db");
+
+var fields_title = "id, state, catg, topt, rflag, rfrom, visit, reply, title, gmt_create, gmt_modify";
+var fields_summary = "id, state, catg, topt, rflag, rfrom, visit, reply, title, summary, gmt_create, gmt_modify";
+var fields_all = "id, state, catg, topt, rflag, rfrom, visit, reply, title, summary, content, gmt_create, gmt_modify";
 
 /**
  * DAO: insert
@@ -87,32 +79,8 @@ exports.count = function(args, handler) {
  */
 exports.findPage = function(args, handler) {
 	db.execQuery({
-		"sql": "SELECT * FROM atom_topic WHERE catg IN (?) ORDER BY id DESC LIMIT ?,?",
+		"sql": "SELECT " + fields_title + " FROM atom_topic WHERE catg IN (?) ORDER BY id DESC LIMIT ?,?",
 		args: [args.catgs, args.offset, args.limit],
-		"handler": handler
-	});
-};
-
-exports.findList = function(args, handler) {
-	db.execQuery({
-		"sql": "SELECT * FROM atom_topic ORDER BY id DESC LIMIT ?,?",
-		args: [args.offset, args.limit],
-		"handler": handler
-	});
-};
-
-exports.findTopVisits = function(args, handler) {
-	db.execQuery({
-		"sql": "SELECT * FROM atom_topic ORDER BY visit_count DESC, id DESC LIMIT 5",
-		args: [args.offset, args.limit],
-		"handler": handler
-	});
-};
-
-exports.findTopReplys = function(args, handler) {
-	db.execQuery({
-		"sql": "SELECT * FROM atom_topic ORDER BY reply_count DESC, id DESC LIMIT 5",
-		args: [args.offset, args.limit],
 		"handler": handler
 	});
 };
