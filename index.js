@@ -40,6 +40,8 @@ app.get('/index-:catg.html', front.index);
 
 app.get('/topic-:catg-:id.html', front.topic);
 
+app.post("/topic-reply", front.reply)
+
 /* 用户页面 */
 var user = require('./routes/user');
 app.get('/users', user.list);

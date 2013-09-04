@@ -14,7 +14,13 @@
 					<p><%= tpc.summary %> [&hellip;]</p>
 					<div class="clearfix"></div>
 					<p class="meta">
-						<i class="icon-calendar"></i> <%= dateFormat(tpc.gmt_modify) %> - <i class="icon-user"></i> 老牛啊 - <i class="icon-film"></i> <%= tpc.visit %> - <i class="icon-comment"></i> <a href="./topic-<%= tpc.catg %>-<%= tpc.id %>.html#respond"><%= tpc.reply %></a> <a href="./topic-<%= tpc.catg %>-<%= tpc.id %>.html" class="pull-right readmore">阅读全文 &raquo;</a>
+						<i class="icon-calendar"></i> <%= dateFormat(tpc.gmt_modify) %>
+						- <i class="icon-user"></i> 老牛啊
+						<% if(!vclean) { %>
+						- <i class="icon-film"></i> <%= tpc.visit %>
+						- <i class="icon-comment"></i> <a href="./topic-<%= tpc.catg %>-<%= tpc.id %>.html#respond"><%= tpc.reply %></a>
+						<% } %>
+						<a href="./topic-<%= tpc.catg %>-<%= tpc.id %>.html" class="pull-right readmore">阅读全文 &raquo;</a>
 					</p>
 					<div class="clearfix"></div>
 				</div>

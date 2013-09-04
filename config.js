@@ -10,6 +10,6 @@ module.exports = {
 	'charset': 'UTF8',
 	'maxConnLimit': 5,
 	'uploadPath': './public/upload/',
-	'appPort': 10080,
+	'appPort': process.env.PORT || 10080,
 	'pageSize': 30
 };

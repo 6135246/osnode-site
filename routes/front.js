@@ -3,6 +3,7 @@
  */
 var config = require('../config');
 var log = require('../lib/log');
+var Reply = require('../models/reply');
 var Topic = require('../models/topic-front');
 var enms = require('../lib/enms');
 var EventProxy = require('eventproxy');
@@ -62,6 +63,13 @@ exports.index = function(request, response) {
 			return dateformat(date, "yyyy-mm-dd");
 		}
 	};
+	
+	var vt = request.query.vt;
+	if(vt) {
+		data.vclean = (vt === "clean");
+	} else {
+		data.vclean = false;
+	}
 
 	// SQL参数
 	var args = {};
@@ -117,13 +125,28 @@ exports.topic = function(request, response) {
 		title: '最新 Java/Node.js/Spring/MySQL/数据库 技术博客',
 		url: request.path,
 		
+		md5: function(text) {
+			return require('crypto').createHash('md5').update(text).digest('hex');
+		},
 		catgValue: function(catg) {
 			return enms.topicCatgValue(catg);
 		},
 		dateFormat: function(date) {
 			return dateformat(date, "yyyy-mm-dd");
+		},
+		datetimeFormat: function(date) {
+			return dateformat(date, "yyyy-mm-dd hh:mm:ss");
 		}
 	};
+	
+	var vt = request.query.vt;
+	if(vt) {
+		data.vclean = (vt === "clean");
+	} else {
+		data.vclean = false;
+	}
+	
+	log.info("Web请求Data：" + require('util').inspect(data));
 
 	// SQL参数
 	var args = {};
@@ -139,11 +162,13 @@ exports.topic = function(request, response) {
 	log.info("SQL参数：" + require('util').inspect(args));
 
 	// 并行处理
-	var ep = EventProxy.create("topic", "visit", "topVisits", "topReplys", function(topic, visit, topVisits, topReplys) {
+	var ep = EventProxy.create("topic", "visit", "replys", "topVisits", "topReplys", 
+			function(topic, visit, replys, topVisits, topReplys) {
 		// 数据
 		if(topic.length > 0) {
 			data.topic = topic[0];
 		}
+		data.replys = replys;
 		data.topVisits = topVisits;
 		data.topReplys = topReplys;
 
@@ -158,6 +183,10 @@ exports.topic = function(request, response) {
 	Topic.updateVisit(id, function(results) {
 		ep.emit("visit", results);
 	});
+	
+	Reply.findAll(id, function(results) {
+		ep.emit("replys", results);
+	});
 
 	Topic.findTopVisits(args, function(results) {
 		ep.emit("topVisits", results);
@@ -165,5 +194,34 @@ exports.topic = function(request, response) {
 
 	Topic.findTopReplys(args, function(results) {
 		ep.emit("topReplys", results);
+	});
+};
+
+/**
+ * 主题回复
+ */
+exports.reply = function(request, response) {
+	log.info("Web请求：" + require('util').inspect(request));
+	
+	var body = request.body;
+	// 并行处理
+	var ep = EventProxy.create("insert", "update", function(insert, update) {
+		// 返回页面
+		response.redirect(body.ufrom);
+	});
+	
+	var reply = {};
+	reply.topic = body.topic;
+	reply.title = body.title;
+	reply.uname = body.uname;
+	reply.uemail = body.uemail;
+	reply.usite = body.usite;
+	reply.content = body.content;
+	Reply.insert(reply, function(results) {
+		ep.emit("insert", results);
+	});
+	
+	Topic.updateReply(body.topic, function(results) {
+		ep.emit("update", results);
 	});
 };
