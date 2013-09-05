@@ -12,7 +12,7 @@ var app = express();
 app.set('port', config.appPort || process.env.PORT || 10080);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(express.favicon());
+app.use(express.favicon("/favicon.png"));
 app.use(express.logger('dev'));
 app.use(express.bodyParser({
 	uploadDir: config.uploadPath
@@ -21,7 +21,7 @@ app.use(express.methodOverride());
 app.use(express.cookieParser('aliapp-nodejs'));
 app.use(express.session());
 app.use(app.router);
-app.use(express.static(path.join(__dirname, 'public')));
+app.use("/public", express.static(path.join(__dirname, 'public'), {maxAge: 0}));
 
 // development only
 if('development' == app.get('env')) {
