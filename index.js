@@ -8,7 +8,7 @@ var path = require('path');
 var mware = require("./lib/mware");
 
 var app = express();
-global.host = "http://localhost";
+// global.host = "http://localhost";
 // global.host = "http://www.aliapp.com";
 
 // all environments

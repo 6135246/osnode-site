@@ -14,8 +14,9 @@ var dateformat = require('dateformat');
  */
 exports.about = function(request, response) {
 	var data = {
-		title: '最新 Java/Node.js/Spring/MySQL/数据库 技术博客',
+		host: config.host,
 		catg: 'about',
+		title: '最新 Java/Node.js/Spring/MySQL/数据库 技术博客',
 		url: request.path,
 
 		dateFormat: function(date) {
@@ -32,8 +33,9 @@ exports.about = function(request, response) {
  */
 exports.album = function(request, response) {
 	var data = {
-		title: '最新 Java/Node.js/Spring/MySQL/数据库 技术博客',
+		host: config.host,
 		catg: 'album',
+		title: '最新 Java/Node.js/Spring/MySQL/数据库 技术博客',
 		url: request.path,
 
 		dateFormat: function(date) {
@@ -50,8 +52,9 @@ exports.album = function(request, response) {
  */
 exports.index = function(request, response) {
 	// log.info("Web请求：" + require('util').inspect(request));
-	
+
 	var data = {
+		host: config.host,
 		catg: 'index',
 		title: '最新 Java/Node.js/Spring/MySQL/数据库 技术博客',
 		url: request.path,
@@ -63,7 +66,7 @@ exports.index = function(request, response) {
 			return dateformat(date, "yyyy-mm-dd");
 		}
 	};
-	
+
 	var vt = request.query.vt;
 	if(vt) {
 		data.vclean = (vt === "clean");
@@ -86,7 +89,7 @@ exports.index = function(request, response) {
 	args.page = (pageNo < 1) ? 1 : pageNo;
 	args.offset = (pageNo - 1) * pageSize;
 	args.limit = pageSize;
-	
+
 	// log.info("SQL参数：" + require('util').inspect(args));
 
 	// 并行处理
@@ -119,12 +122,13 @@ exports.index = function(request, response) {
  */
 exports.topic = function(request, response) {
 	// log.info("Web请求：" + require('util').inspect(request));
-	
+
 	var data = {
+		host: config.host,
 		catg: 'index',
 		title: '最新 Java/Node.js/Spring/MySQL/数据库 技术博客',
 		url: request.path,
-		
+
 		md5: function(text) {
 			return require('crypto').createHash('md5').update(text).digest('hex');
 		},
@@ -138,14 +142,14 @@ exports.topic = function(request, response) {
 			return dateformat(date, "yyyy-mm-dd hh:mm:ss");
 		}
 	};
-	
+
 	var vt = request.query.vt;
 	if(vt) {
 		data.vclean = (vt === "clean");
 	} else {
 		data.vclean = false;
 	}
-	
+
 	// log.info("Web请求Data：" + require('util').inspect(data));
 
 	// SQL参数
@@ -158,12 +162,11 @@ exports.topic = function(request, response) {
 		data.catg = catg;
 		args.catgs = [catg];
 	}
-	
+
 	// log.info("SQL参数：" + require('util').inspect(args));
 
 	// 并行处理
-	var ep = EventProxy.create("topic", "visit", "replys", "topVisits", "topReplys", 
-			function(topic, visit, replys, topVisits, topReplys) {
+	var ep = EventProxy.create("topic", "visit", "replys", "topVisits", "topReplys", function(topic, visit, replys, topVisits, topReplys) {
 		// 数据
 		if(topic.length > 0) {
 			data.topic = topic[0];
@@ -179,11 +182,11 @@ exports.topic = function(request, response) {
 	Topic.findID(id, function(results) {
 		ep.emit("topic", results);
 	});
-	
+
 	Topic.updateVisit(id, function(results) {
 		ep.emit("visit", results);
 	});
-	
+
 	Reply.findAll(id, function(results) {
 		ep.emit("replys", results);
 	});
@@ -202,14 +205,14 @@ exports.topic = function(request, response) {
  */
 exports.reply = function(request, response) {
 	// log.info("Web请求：" + require('util').inspect(request));
-	
+
 	var body = request.body;
 	// 并行处理
 	var ep = EventProxy.create("insert", "update", function(insert, update) {
 		// 返回页面
 		response.redirect(body.ufrom);
 	});
-	
+
 	var reply = {};
 	reply.topic = body.topic;
 	reply.title = body.title;
@@ -220,7 +223,7 @@ exports.reply = function(request, response) {
 	Reply.insert(reply, function(results) {
 		ep.emit("insert", results);
 	});
-	
+
 	Topic.updateReply(body.topic, function(results) {
 		ep.emit("update", results);
 	});
