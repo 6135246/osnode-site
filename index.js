@@ -5,14 +5,17 @@ var config = require('./config');
 var express = require('express');
 var http = require('http');
 var path = require('path');
+var mware = require("./lib/mware");
 
 var app = express();
+global.host = "http://localhost";
+// global.host = "http://www.aliapp.com";
 
 // all environments
 app.set('port', config.appPort || process.env.PORT || 10080);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
-app.use(express.favicon("/favicon.png"));
+// app.use(express.favicon("/favicon.png"));
 app.use(express.logger('dev'));
 app.use(express.bodyParser({
 	uploadDir: config.uploadPath
@@ -21,7 +24,11 @@ app.use(express.methodOverride());
 app.use(express.cookieParser('aliapp-nodejs'));
 app.use(express.session());
 app.use(app.router);
-app.use("/public", express.static(path.join(__dirname, 'public'), {maxAge: 0}));
+app.use("/public", express.static(path.join(__dirname, 'public'), {
+	maxAge: 0
+}));
+
+app.use("/topic/manage", mware.topic);
 
 // development only
 if('development' == app.get('env')) {

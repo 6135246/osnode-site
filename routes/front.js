@@ -49,7 +49,7 @@ exports.album = function(request, response) {
  * 首页-列表
  */
 exports.index = function(request, response) {
-	log.info("Web请求：" + require('util').inspect(request));
+	// log.info("Web请求：" + require('util').inspect(request));
 	
 	var data = {
 		catg: 'index',
@@ -87,7 +87,7 @@ exports.index = function(request, response) {
 	args.offset = (pageNo - 1) * pageSize;
 	args.limit = pageSize;
 	
-	log.info("SQL参数：" + require('util').inspect(args));
+	// log.info("SQL参数：" + require('util').inspect(args));
 
 	// 并行处理
 	var ep = EventProxy.create("topics", "topVisits", "topReplys", function(topics, topVisits, topReplys) {
@@ -118,7 +118,7 @@ exports.index = function(request, response) {
  * 主题-查看
  */
 exports.topic = function(request, response) {
-	log.info("Web请求：" + require('util').inspect(request));
+	// log.info("Web请求：" + require('util').inspect(request));
 	
 	var data = {
 		catg: 'index',
@@ -146,7 +146,7 @@ exports.topic = function(request, response) {
 		data.vclean = false;
 	}
 	
-	log.info("Web请求Data：" + require('util').inspect(data));
+	// log.info("Web请求Data：" + require('util').inspect(data));
 
 	// SQL参数
 	var args = {};
@@ -159,7 +159,7 @@ exports.topic = function(request, response) {
 		args.catgs = [catg];
 	}
 	
-	log.info("SQL参数：" + require('util').inspect(args));
+	// log.info("SQL参数：" + require('util').inspect(args));
 
 	// 并行处理
 	var ep = EventProxy.create("topic", "visit", "replys", "topVisits", "topReplys", 
@@ -201,7 +201,7 @@ exports.topic = function(request, response) {
  * 主题回复
  */
 exports.reply = function(request, response) {
-	log.info("Web请求：" + require('util').inspect(request));
+	// log.info("Web请求：" + require('util').inspect(request));
 	
 	var body = request.body;
 	// 并行处理
