@@ -2,7 +2,7 @@
  * 应用配置信息
  */
 module.exports = {
-	'host': process.env.NODEHOST || 'http://www.aliapp.com',
+	'host': process.env.NODEHOST || 'http://anode.aliapp.com',
 	'db': 'r631obullxl',
 	'dbhost': 'r7821obullxl.mysql.aliyun.com',
 	'port': 3306,
