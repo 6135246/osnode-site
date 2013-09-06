@@ -9,7 +9,7 @@
 				<% topics.forEach(function(tpc) { %>
 				<div class="entry">
 					<h4>
-						[<a href="./topic-<%= tpc.catg %>.html"><%= catgValue(tpc.catg) %></a>] <a href="./topic-<%= tpc.catg %>-<%= tpc.id %>.html" rel="bookmark"><%= tpc.title %></a>
+						[<a href="./index-<%= tpc.catg %>.html"><%= catgValue(tpc.catg) %></a>] <a href="./topic-<%= tpc.catg %>-<%= tpc.id %>.html" rel="bookmark"><%= tpc.title %></a>
 					</h4>
 					<p><%= tpc.summary %> [&hellip;]</p>
 					<div class="clearfix"></div>
