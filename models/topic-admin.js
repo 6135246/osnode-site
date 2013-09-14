@@ -3,17 +3,17 @@
  */
 var db = require("../lib/db");
 
-var fields_title = "id, state, catg, topt, rflag, rfrom, visit, reply, title, gmt_create, gmt_modify";
-var fields_summary = "id, state, catg, topt, rflag, rfrom, visit, reply, title, summary, gmt_create, gmt_modify";
-var fields_all = "id, state, catg, topt, rflag, rfrom, visit, reply, title, summary, content, gmt_create, gmt_modify";
+var fields_title = "id, state, catg, tflag, rflag, rfrom, mflag, mpath, visit, reply, title, gmt_create, gmt_modify";
+var fields_summary = "id, state, catg, tflag, rflag, rfrom, mflag, mpath, visit, reply, title, summary, gmt_create, gmt_modify";
+var fields_all = "id, state, catg, tflag, rflag, rfrom, mflag, mpath, visit, reply, title, summary, content, gmt_create, gmt_modify";
 
 /**
  * DAO: insert
  */
 exports.insert = function(tpc, handler) {
 	db.execQuery({
-		"sql": "INSERT INTO atom_topic(catg, title, summary, content, gmt_create, gmt_modify) VALUES(?, ?, ?, ?, NOW(), NOW())",
-		"args": [tpc.catg, tpc.title, tpc.summary, tpc.content],
+		"sql": "INSERT INTO atom_topic(catg, mflag, mpath, title, summary, content, gmt_create, gmt_modify) VALUES(?, ?, ?, ?, ?, ?, NOW(), NOW())",
+		"args": [tpc.catg, tpc.mflag, tpc.mpath, tpc.title, tpc.summary, tpc.content],
 		"handler": handler
 	});
 };
@@ -23,8 +23,8 @@ exports.insert = function(tpc, handler) {
  */
 exports.update = function(tpc, handler) {
 	db.execQuery({
-		"sql": "UPDATE atom_topic SET catg=?, title=?, summary=?, content=?, gmt_modify=NOW() WHERE id=?)",
-		"args": [tpc.catg, tpc.title, tpc.summary, tpc.content, tpc.id],
+		"sql": "UPDATE atom_topic SET catg=?, mflag=?, mpath=?, title=?, summary=?, content=?, gmt_modify=NOW() WHERE id=?",
+		"args": [tpc.catg, tpc.mflag, tpc.mpath, tpc.title, tpc.summary, tpc.content, tpc.id],
 		"handler": handler
 	});
 };

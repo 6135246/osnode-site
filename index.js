@@ -5,7 +5,6 @@ var config = require('./config');
 var express = require('express');
 var http = require('http');
 var path = require('path');
-var mware = require("./lib/mware");
 
 var app = express();
 // global.host = "http://localhost";
@@ -23,17 +22,24 @@ app.use(express.bodyParser({
 app.use(express.methodOverride());
 app.use(express.cookieParser('aliapp-nodejs'));
 app.use(express.session());
+// 管理员中间件
+app.use("/admin", require("./lib/mware-admin.js")());
+
 app.use(app.router);
 app.use("/public", express.static(path.join(__dirname, 'public'), {
 	maxAge: 0
 }));
 
-app.use("/topic/manage", mware.topic);
-
 // development only
 if('development' == app.get('env')) {
 	app.use(express.errorHandler());
 }
+
+/* 登录页面 */
+var index = require('./routes/index.js');
+app.get('/login.html', index.login);
+app.post('/login.html', index.login);
+app.get('/logout.html', index.logout);
 
 /* 前台页面 */
 var front = require('./routes/front');
@@ -51,21 +57,32 @@ app.post("/topic-reply", front.reply)
 
 /* 用户页面 */
 var user = require('./routes/user');
-app.get('/users', user.list);
-app.get('/users2', user.list2);
+app.get('/admin/user-manage.html', user.manage);
 
 /* 文件配置 */
 var file = require('./routes/file');
 app.get('/file/select', file.select);
 app.post('/file/upload', file.upload);
 
-/* 主题信息 */
-var topic = require('./routes/topic');
-app.get('/topic/create', topic.create);
-app.get('/topic/view/:id', topic.view);
-app.get('/topic/update/:id', topic.update);
-app.get('/topic/manage', topic.manage);
-app.post('/topic/store', topic.store);
+/* 后台管理 */
+var admin = require('./routes/admin');
+app.get('/admin', admin.index);
+app.get('/admin/index.html', admin.index);
+app.get('/admin/topic-create.html', admin.create);
+app.post('/admin/topic-store.html', admin.store);
+
+app.get('/admin/topic-view-:id.html', admin.view);
+app.get('/admin/topic-update-:id.html', admin.update);
+app.get('/admin/topic-manage.html', admin.manage);
+
+var album = require('./routes/album');
+app.get('/admin/album-create.html', album.create);
+app.post('/admin/album-create.html', album.create);
+
+app.get('/admin/album-update-:id.html', album.update);
+app.post('/admin/album-update-:id.html', album.update);
+
+app.post('/admin/image-create-:id.html', album.addImg);
 
 // 创建服务端
 http.createServer(app).listen(app.get('port'), function() {

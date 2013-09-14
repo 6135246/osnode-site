@@ -3,10 +3,73 @@
  */
 var config = require('../config');
 var log = require('../lib/log');
-var Topic = require('../models/topic');
+var Topic = require('../models/topic-admin');
 var enms = require('../lib/enms');
 var EventProxy = require('eventproxy');
 var dateformat = require('dateformat');
+
+/**
+ * 后台主页面
+ */
+exports.index = function(request, response) {
+	response.redirect("/admin/topic-manage.html");
+};
+
+/**
+ * 创建主题页面
+ */
+exports.create = function(request, response) {
+	// log.info("Web请求：" + require('util').inspect(request));
+
+	var data = {
+		title: '创建主题',
+		url: request.path,
+		breadcrumbs: [{
+			label: "管理后台",
+			href: "/admin/topic-manage.html"
+		}, {
+			label: "主题管理",
+			href: "/admin/topic-manage.html"
+		}, {
+			label: '创建主题'
+		}],
+		catgs: enms.topicCatgEnums()
+	};
+
+	response.render('admin/topic-create', data);
+};
+
+/**
+ * 更新主题页面
+ */
+exports.update = function(request, response) {
+	var id = request.params.id;
+	// log.info("更新主题: " + id);
+	// log.info("Web请求：" + require('util').inspect(request));
+
+	var data = {
+		title: '编辑主题',
+		url: request.path,
+		breadcrumbs: [{
+			label: "管理后台",
+			href: "/admin/topic-manage.html"
+		}, {
+			label: "主题管理",
+			href: "/admin/topic-manage.html"
+		}, {
+			label: '编辑主题(' + id + ')'
+		}],
+		catgs: enms.topicCatgEnums()
+	};
+
+	Topic.findID(id, function(results) {
+		if(results.length > 0) {
+			data.topic = results[0];
+		}
+
+		response.render('admin/topic-update', data);
+	});
+};
 
 /**
  * 增加或是更新主题信息<br/> 请求JSON数据：
@@ -33,11 +96,13 @@ var dateformat = require('dateformat');
  */
 exports.store = function(request, response) {
 	var body = request.body;
-	log.info("JSON请求数据：\n" + require('util').inspect(body));
+	// log.info("JSON请求数据：\n" + require('util').inspect(body));
 
 	var topic = {};
 	topic.id = body.id || 0;
 	topic.catg = body.catg;
+	topic.mflag = 'F';
+	topic.mpath = '';
 	topic.title = body.title;
 	topic.summary = body.summary;
 	topic.content = body.content;
@@ -45,7 +110,7 @@ exports.store = function(request, response) {
 	if(topic.id <= 0) {
 		// log.info("新增主题:\n" + require('util').inspect(topic));
 		Topic.insert(topic, function(results) {
-			log.info("新增主题成功:\n" + require('util').inspect(results));
+			// log.info("新增主题成功:\n" + require('util').inspect(results));
 			topic.id = results.insertId;
 
 			response.json({
@@ -67,36 +132,6 @@ exports.store = function(request, response) {
 };
 
 /**
- * 创建主题页面
- */
-exports.create = function(request, response) {
-	var data = {
-		title: '创建主题',
-		url: request.path,
-		breadcrumbs: [{
-			label: "主页",
-			href: "/"
-		}, {
-			label: "主题管理",
-			href: "/topic/manage"
-		}, {
-			label: '创建主题'
-		}],
-		catgs: enms.topicCatgEnums()
-	};
-
-	response.render('topic-create', data);
-};
-
-/**
- * 更新主题页面
- */
-exports.update = function(request, response) {
-	var tpcId = request.params.id;
-	// log.info("更新主题: " + tpcId);
-};
-
-/**
  * 查看主题页面
  */
 exports.view = function(request, response) {
@@ -106,13 +141,13 @@ exports.view = function(request, response) {
 		title: '查看主题',
 		url: request.path,
 		breadcrumbs: [{
-			label: "主页",
-			href: "/"
+			label: "管理后台",
+			href: "/admin/topic-manage.html"
 		}, {
 			label: "主题管理",
-			href: "/topic/manage"
+			href: "/admin/topic-manage.html"
 		}, {
-			label: '查看主题'
+			label: '查看主题(' + tpcId + ')'
 		}],
 		tpcId: tpcId
 	};
@@ -126,9 +161,9 @@ exports.view = function(request, response) {
 
 		var vt = request.query.v;
 		if(vt) {
-			response.render('topic-view-' + vt, data);
+			response.render('admin/topic-view-' + vt, data);
 		} else {
-			response.render('topic-view-lean', data);
+			response.render('admin/topic-view-lean', data);
 		}
 	});
 };
@@ -141,10 +176,10 @@ exports.manage = function(request, response) {
 		title: '主题管理',
 		url: request.path,
 		breadcrumbs: [{
-			label: "主页",
-			href: "/"
+			label: "管理后台",
+			href: "/admin/topic-manage.html"
 		}, {
-			label: "主题管理"
+			label: "主题管理",
 		}],
 		catgValue: function(catg) {
 			return enms.topicCatgValue(catg);
@@ -196,7 +231,7 @@ exports.manage = function(request, response) {
 		// log.info("结果数据: " + require('util').inspect(data));
 
 		// 返回页面
-		response.render('topic-manage', data);
+		response.render('admin/topic-manage', data);
 	});
 
 	Topic.count(args, function(count) {

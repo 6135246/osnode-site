@@ -3,9 +3,9 @@
  */
 var db = require("../lib/db");
 
-var fields_title = "id, state, catg, topt, rflag, rfrom, visit, reply, title, gmt_create, gmt_modify";
-var fields_summary = "id, state, catg, topt, rflag, rfrom, visit, reply, title, summary, gmt_create, gmt_modify";
-var fields_all = "id, state, catg, topt, rflag, rfrom, visit, reply, title, summary, content, gmt_create, gmt_modify";
+var fields_title = "id, state, catg, tflag, rflag, rfrom, mflag, mpath, visit, reply, title, gmt_create, gmt_modify";
+var fields_summary = "id, state, catg, tflag, rflag, rfrom, mflag, mpath, visit, reply, title, summary, gmt_create, gmt_modify";
+var fields_all = "id, state, catg, tflag, rflag, rfrom, mflag, mpath, visit, reply, title, summary, content, gmt_create, gmt_modify";
 
 /**
  * DAO: 浏览次数+1

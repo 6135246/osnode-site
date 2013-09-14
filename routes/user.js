@@ -1,11 +1,9 @@
 /**
- * Modules dependencies
+ * 用户页面模块
  */
-var user = require("../models/user");
+var User = require("../models/user");
 var log = require("../lib/log");
-
-var url = require("url");
-var querystring = require("querystring");
+var dateformat = require('dateformat');
 
 /**
  * Create a user
@@ -13,25 +11,30 @@ var querystring = require("querystring");
 exports.create = function(request, response) {
 	var pathname = url.parse(request.url).pathname;
 };
- 
+
 /**
- * GET users listing.
+ * 用户管理页面
  */
-exports.list = function(request, response) {
-	log.info("+Query: " + url.parse(request.url).query);
-	log.info("+PathName: " + url.parse(request.url).pathname);
-	
-	user.findAll(function(results) {
-		response.send(results);
+exports.manage = function(request, response) {
+	// log.info("用户登录：" + require('util').inspect(request.method));
+	var data = {
+		title: '用户管理',
+		url: request.path,
+		breadcrumbs: [{
+			label: "管理后台",
+			href: "/admin/user-manage.html"
+		}, {
+			label: "用户管理",
+		}],
+		dateFormat: function(date) {
+			return dateformat(date, "yyyy-mm-dd hh:MM:ss");
+		}
+	};
+
+	User.findAll(function(results) {
+		data.users = results;
+		
+		// 返回页面
+		response.render('admin/user-manage', data);
 	});
 };
-
-exports.list2 = function(request, response) {
-	var args = querystring.parse(url.parse(request.url).query);
-	var minId = args['minId'] || 5;
-	
-	user.findMinID(minId, function(results) {
-		response.send(results);
-	});
-};
-

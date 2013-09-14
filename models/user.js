@@ -1,14 +1,8 @@
 /*
  * User model
  */
-exports.model = function() {
-	return {
-		"id" : "",
-		"firstname" : "",
-		"lastname" : "",
-		"message" : ""
-	};
-};
+
+var fields_all = "id, uname, passwd, uemail, gmt_create, gmt_modify";
 
 /**
  * 模块依赖
@@ -18,11 +12,11 @@ var db = require("../lib/db");
 /**
  * DAO: find
  */
-exports.findID = function(id, handler) {
+exports.findUName = function(uname, handler) {
 	db.execQuery({
-		"sql" : "SELECT * FROM MyTable WHERE id=?",
-		"args" : [ id ],
-		"handler" : handler
+		"sql": "SELECT * FROM atom_user WHERE uname=?",
+		"args": [uname],
+		"handler": handler
 	});
 };
 
@@ -31,18 +25,7 @@ exports.findID = function(id, handler) {
  */
 exports.findAll = function(handler) {
 	db.execQuery({
-		"sql" : "SELECT * FROM MyTable",
-		"handler" : handler
-	});
-};
-
-/**
- * DAO: findMinID
- */
-exports.findMinID = function(minId, handler) {
-	db.execQuery({
-		"sql" : "SELECT * FROM MyTable WHERE id>?",
-		"args" : [ minId ],
-		"handler" : handler
+		"sql": "SELECT * FROM atom_user ORDER BY id DESC",
+		"handler": handler
 	});
 };
