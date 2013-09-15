@@ -4,9 +4,8 @@
 var config = require('../config');
 var log = require('../lib/log');
 var Topic = require('../models/topic-admin');
-var enms = require('../lib/enms');
 var EventProxy = require('eventproxy');
-var dateformat = require('dateformat');
+var RUtil = require('./rutil');
 
 /**
  * 后台主页面
@@ -21,20 +20,11 @@ exports.index = function(request, response) {
 exports.create = function(request, response) {
 	// log.info("Web请求：" + require('util').inspect(request));
 
-	var data = {
-		title: '创建主题',
-		url: request.path,
-		breadcrumbs: [{
-			label: "管理后台",
-			href: "/admin/topic-manage.html"
-		}, {
-			label: "主题管理",
-			href: "/admin/topic-manage.html"
-		}, {
-			label: '创建主题'
-		}],
-		catgs: enms.topicCatgEnums()
-	};
+	var data = RUtil.data(request);
+	data.title = '创建主题';
+	data.breadcrumbs[2].label = '创建主题';
+
+	// log.info("Web返回：\n" + require('util').inspect(data));
 
 	response.render('admin/topic-create', data);
 };
@@ -47,20 +37,9 @@ exports.update = function(request, response) {
 	// log.info("更新主题: " + id);
 	// log.info("Web请求：" + require('util').inspect(request));
 
-	var data = {
-		title: '编辑主题',
-		url: request.path,
-		breadcrumbs: [{
-			label: "管理后台",
-			href: "/admin/topic-manage.html"
-		}, {
-			label: "主题管理",
-			href: "/admin/topic-manage.html"
-		}, {
-			label: '编辑主题(' + id + ')'
-		}],
-		catgs: enms.topicCatgEnums()
-	};
+	var data = RUtil.data(request);
+	data.title = '编辑主题';
+	data.breadcrumbs[2].label = '编辑主题(' + id + ')';
 
 	Topic.findID(id, function(results) {
 		if(results.length > 0) {
@@ -137,20 +116,10 @@ exports.store = function(request, response) {
 exports.view = function(request, response) {
 	var tpcId = request.params.id;
 
-	var data = {
-		title: '查看主题',
-		url: request.path,
-		breadcrumbs: [{
-			label: "管理后台",
-			href: "/admin/topic-manage.html"
-		}, {
-			label: "主题管理",
-			href: "/admin/topic-manage.html"
-		}, {
-			label: '查看主题(' + tpcId + ')'
-		}],
-		tpcId: tpcId
-	};
+	var data = RUtil.data(request);
+	data.tpcId = tpcId;
+	data.title = '查看主题';
+	data.breadcrumbs[2].label = '查看主题(' + tpcId + ')';
 
 	Topic.findID(tpcId, function(results) {
 		// log.info("主题信息: " + require('util').inspect(results));
@@ -172,22 +141,9 @@ exports.view = function(request, response) {
  * 主题管理页面
  */
 exports.manage = function(request, response) {
-	var data = {
-		title: '主题管理',
-		url: request.path,
-		breadcrumbs: [{
-			label: "管理后台",
-			href: "/admin/topic-manage.html"
-		}, {
-			label: "主题管理",
-		}],
-		catgValue: function(catg) {
-			return enms.topicCatgValue(catg);
-		},
-		dateFormat: function(date) {
-			return dateformat(date, "yyyy-mm-dd hh:MM:ss");
-		}
-	};
+	var data = RUtil.data(request);
+	data.title = '主题管理';
+	data.breadcrumbs[2].label = '主题管理';
 
 	// 数据类型
 	var catgs = [];
@@ -195,7 +151,7 @@ exports.manage = function(request, response) {
 		catgs.push(request.query.t);
 		data.catg = request.query.t;
 	} else {
-		catgs = enms.topicCatgCodes();
+		catgs = data.topicCatgCodes;
 	}
 
 	// 分页信息
