@@ -18,7 +18,7 @@
 				<td><div class="text-center"><%= tpc.id %></div></td>
 				<td><div class="text-center"><a href="/admin/topic-manage.html?t=<%= tpc.catg %>&p=<%= page %>"><%= catgValue(tpc.catg) %></a></div></td>
 				<td><a href="/admin/topic-view-<%= tpc.id %>.html?v=full"><%= tpc.title %></a></td>
-				<td><div class="text-center"><%= dateFormat(tpc.gmt_modify) %></div></td>
+				<td><div class="text-center"><%= datetimeFormat(tpc.gmt_modify) %></div></td>
 				<td>
 					<% if(tpc.catg === 'album') { %>
 					<div class="text-center"><a class="btn" href="/admin/album-update-<%= tpc.id %>.html">编辑</a></div>
