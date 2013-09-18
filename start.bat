@@ -1,3 +1,3 @@
 set PORT=80
-set NODEHOST=http://127.0.0.1
+set NODEHOST=http://obullxl.github.io
 node index.js
