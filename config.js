@@ -2,15 +2,14 @@
  * 应用配置信息
  */
 module.exports = {
-	'host': process.env.NODEHOST || 'http://anode.aliapp.com',
-	'db': 'r631obullxl',
-	'dbhost': 'r7821obullxl.mysql.aliyun.com',
-	'port': 3306,
-	'user': 'r631obullxl',
-	'password': 'rd828439b',
+	'host': process.env.NODEHOST || 'http://obullxl.github.io',
+	'db': process.env.DB_NAME || 'XxSJRHDfpheLlikgBqSI',
+	'dbhost': process.env.BAE_ENV_ADDR_SQL_IP || process.env.DB_HOST,
+	'port': process.env.BAE_ENV_ADDR_SQL_PORT || process.env.DB_PORT,
+	'user': process.env.BAE_ENV_AK || process.env.DB_USER,
+	'password': process.env.BAE_ENV_SK || process.env.DB_PASSWD,
 	'charset': 'UTF8',
 	'maxConnLimit': 5,
 	'uploadPath': './public/upload/',
-	'appPort': process.env.PORT || 10080,
 	'pageSize': 30
 };

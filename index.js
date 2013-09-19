@@ -11,7 +11,7 @@ var app = express();
 // global.host = "http://www.aliapp.com";
 
 // all environments
-app.set('port', config.appPort || process.env.PORT || 10080);
+app.set('port', process.env.APP_PORT);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 // app.use(express.favicon("/favicon.png"));
