@@ -1,14 +1,7 @@
-lib-cov
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
+*.class
 
-pids
-logs
-results
+# Package Files #
+*.jar
+*.war
+*.ear
 
-npm-debug.log

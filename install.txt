@@ -1,0 +1,11 @@
+
+npm install dateformat
+
+npm install ejs
+
+npm install eventproxy
+
+npm install express
+
+npm install mysql
+
