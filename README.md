@@ -3,7 +3,7 @@ OSN开源站点
 
 采用Node.js+Bootstrap构建，具有统一的展示效果；基于Apache v2 License，对使用者无任务约束；
 
-有问题或建议，请联系：obullxl@gmail.com
+有问题或建议，请联系：obullxl@gmail.com，或在百度云引擎效果留言：http://obullxl.duapp.com
 
 1、百度云引擎效果：http://obullxl.duapp.com，由于是免费的测试服务器，服务器不是很稳定，有时可能打不开，请刷新一下即可；
 
