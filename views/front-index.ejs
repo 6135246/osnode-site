@@ -16,8 +16,8 @@
 					<p class="meta">
 						<i class="icon-calendar"></i> <%= dateFormat(tpc.gmt_modify) %>
 						<% if(!vclean) { %>
-						- <i class="icon-film"></i> <%= tpc.visit %>
 						- <i class="icon-comment"></i> <a href="./topic-<%= tpc.catg %>-<%= tpc.id %>.html#respond"><%= tpc.reply %></a>
+						- <i class="icon-film"></i> <%= tpc.visit %>
 						<% } %>
 						<a href="./topic-<%= tpc.catg %>-<%= tpc.id %>.html" class="pull-right readmore">阅读全文 &raquo;</a>
 					</p>
