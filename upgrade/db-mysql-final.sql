@@ -1,4 +1,14 @@
 /**
+ * 创建数据库
+ */
+CREATE DATABASE osnode DEFAULT CHARSET=UTF8;
+
+GRANT ALL PRIVILEGES ON misc.* TO 'osnode'@'%' IDENTIFIED BY 'site';
+GRANT ALL PRIVILEGES ON misc.* TO 'osnode'@'localhost' IDENTIFIED BY 'site';
+
+use osnode;
+
+/**
  * 用户数据表
  */
 CREATE TABLE atom_user (
@@ -11,7 +21,7 @@ CREATE TABLE atom_user (
   UNIQUE KEY atom_user_uname_u (uname)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 COMMENT '用户信息数据表';
 
-INSERT INTO atom_user(uname, passwd, uemail, gmt_create, gmt_modify) VALUES("admin", "21218cca77804d2ba1922c33e0151105", "obullxl@gmail.com", NOW(), NOW());
+INSERT INTO atom_user(uname, passwd, uemail, gmt_create, gmt_modify) VALUES("老牛啊", "21218cca77804d2ba1922c33e0151105", "obullxl@gmail.com", NOW(), NOW());
 
 /**
  * 主题数据表
@@ -19,7 +29,7 @@ INSERT INTO atom_user(uname, passwd, uemail, gmt_create, gmt_modify) VALUES("adm
 CREATE TABLE atom_topic (
   id BIGINT AUTO_INCREMENT PRIMARY KEY COMMENT '主键ID',
   state VARCHAR(20) 	DEFAULT 'T' COMMENT '状态标识, T-有效, F-无效',
-  catg 	VARCHAR(255) 				COMMENT '分类, blog-博客, news-咨询, image-美图, ...',
+  catg 	VARCHAR(255) 				COMMENT '分类, blog-博客, news-咨询, album-美图, ...',
   tflag VARCHAR(20) 	DEFAULT 'F' COMMENT '置顶标识, T-置顶, F-非置顶',
   rflag VARCHAR(20) 	DEFAULT 'F' COMMENT '引用标识, T-引用外部资源, F-原创资源',
   rfrom VARCHAR(255) 				COMMENT '引用来源',
