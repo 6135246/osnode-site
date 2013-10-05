@@ -11,6 +11,7 @@ var dateformat = require('dateformat');
 exports.data = function(request) {
 	return {
 		url: request.path,
+		vpage: '',
 		catg: '',
 		title: '',
 		host: 'http://obullxl.github.io',
@@ -22,6 +23,39 @@ exports.data = function(request) {
 			href: "/admin/topic-manage.html"
 		}, {
 			label: '创建主题'
+		}],
+		catgs: enms.topicCatgEnums(),
+		catgValue: function(catg) {
+			return enms.topicCatgValue(catg);
+		},
+		topicCatgCodes: enms.topicCatgCodes(),
+		md5: function(text) {
+			return require('crypto').createHash('md5').update(text).digest('hex');
+		},
+		dateFormat: function(date) {
+			return dateformat(date, "yyyy-mm-dd");
+		},
+		datetimeFormat: function(date) {
+			return dateformat(date, "yyyy-mm-dd hh:mm:ss");
+		}
+	};
+};
+
+exports.album_data = function(request) {
+	return {
+		url: request.path,
+		vpage: '',
+		catg: '',
+		title: '',
+		host: 'http://obullxl.github.io',
+		breadcrumbs: [{
+			label: "管理后台",
+			href: "/admin/topic-manage.html"
+		}, {
+			label: "相册管理",
+			href: "/admin/topic-manage.html?t=album"
+		}, {
+			label: '创建相册'
 		}],
 		catgs: enms.topicCatgEnums(),
 		catgValue: function(catg) {

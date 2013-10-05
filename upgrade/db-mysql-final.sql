@@ -21,7 +21,7 @@ CREATE TABLE atom_user (
   UNIQUE KEY atom_user_uname_u (uname)
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 COMMENT '用户信息数据表';
 
-INSERT INTO atom_user(uname, passwd, uemail, gmt_create, gmt_modify) VALUES("老牛啊", "21218cca77804d2ba1922c33e0151105", "obullxl@gmail.com", NOW(), NOW());
+INSERT INTO atom_user(uname, passwd, uemail, gmt_create, gmt_modify) VALUES("admin", "21218cca77804d2ba1922c33e0151105", "obullxl@gmail.com", NOW(), NOW());
 
 /**
  * 主题数据表
@@ -45,9 +45,6 @@ CREATE TABLE atom_topic (
   gmt_create DATETIME COMMENT '记录创建时间',
   gmt_modify DATETIME COMMENT '记录修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 COMMENT '主题信息数据表';
-
-ALTER TABLE atom_topic ADD mcount BIGINT DEFAULT '0' AFTER mpath;
-ALTER TABLE atom_topic ADD treply VARCHAR(20) DEFAULT 'T' AFTER mcount;
 
 /**
  * 评论数据表
@@ -78,5 +75,3 @@ CREATE TABLE atom_image (
   gmt_create DATETIME COMMENT '记录创建时间',
   gmt_modify DATETIME COMMENT '记录修改时间'
 ) ENGINE=InnoDB DEFAULT CHARSET=UTF8 COMMENT '图片信息数据表';
-
-ALTER TABLE atom_image ADD title VARCHAR(255) AFTER topic;

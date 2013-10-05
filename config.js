@@ -13,6 +13,8 @@ module.exports = {
 	'db_charset': 'UTF8',
 	'db_conn_limit': 5,
 	
+	'ads_show': process.env.ADS_SHOW || true,
+	
 	'uploadPath': './public/upload/',
 	'pageSize': 30
 };
