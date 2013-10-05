@@ -5,4 +5,7 @@ set DB_HOST=localhost
 set DB_PORT=3306
 set DB_USER=osnode
 set DB_PASSWD=site
+
+set ADS_SHOW=true
+
 node index.js
