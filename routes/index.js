@@ -6,6 +6,7 @@ var log = require("../lib/log");
 var config = require('../config');
 var User = require('../models/user');
 var crypto = require('crypto');
+var RUtil = require('./rutil');
 
 /**
  * 登录页面
@@ -13,11 +14,9 @@ var crypto = require('crypto');
 exports.login = function(request, response) {
 	// log.info("用户登录：" + require('util').inspect(request.method));
 	var method = request.method || '';
-	var data = {
-		host: config.host,
-		title: '管理员登录',
-		uname: ''
-	};
+	var data = RUtil.front_data(request);
+	data.title = '管理员登录';
+	data.uname = '';
 
 	// 登录页面
 	if(method.toUpperCase() === "GET") {

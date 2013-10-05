@@ -2,7 +2,7 @@
  * 应用配置信息
  */
 module.exports = {
-	'host': process.env.NODEHOST || 'http://obullxl.github.io',
+	'static_host': process.env.STATIC_HOST || 'http://obullxl.github.io',
 	
 	/* 数据库配置参数 */
 	'db_host': process.env.BAE_ENV_ADDR_SQL_IP || process.env.DB_HOST,

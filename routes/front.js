@@ -5,24 +5,15 @@ var config = require('../config');
 var log = require('../lib/log');
 var Reply = require('../models/reply');
 var Topic = require('../models/topic-front');
-var enms = require('../lib/enms');
 var EventProxy = require('eventproxy');
-var dateformat = require('dateformat');
+var RUtil = require('./rutil');
 
 /**
  * 关于
  */
 exports.about = function(request, response) {
-	var data = {
-		host: config.host,
-		catg: 'about',
-		title: '最新 Java/Node.js/Spring/MySQL/数据库 技术博客',
-		url: request.path,
-
-		dateFormat: function(date) {
-			return dateformat(date, "yyyy-mm-dd");
-		}
-	};
+	var data = RUtil.front_data(request);
+	data.catg = 'about';
 
 	// 返回页面
 	response.render('front-about', data);
@@ -32,17 +23,9 @@ exports.about = function(request, response) {
  * 美图
  */
 exports.album = function(request, response) {
-	var data = {
-		host: config.host,
-		catg: 'album',
-		title: '最新 Java/Node.js/Spring/MySQL/数据库 技术博客',
-		url: request.path,
-
-		dateFormat: function(date) {
-			return dateformat(date, "yyyy-mm-dd");
-		}
-	};
-
+	var data = RUtil.front_data(request);
+	data.catg = 'album';
+	
 	// 返回页面
 	response.render('front-album', data);
 };
@@ -52,20 +35,9 @@ exports.album = function(request, response) {
  */
 exports.index = function(request, response) {
 	// log.info("Web请求：" + require('util').inspect(request));
-
-	var data = {
-		host: config.host,
-		catg: 'index',
-		title: '最新 Java/Node.js/Spring/MySQL/数据库 技术博客',
-		url: request.path,
-
-		catgValue: function(catg) {
-			return enms.topicCatgValue(catg);
-		},
-		dateFormat: function(date) {
-			return dateformat(date, "yyyy-mm-dd");
-		}
-	};
+	
+	var data = RUtil.front_data(request);
+	data.catg = 'index';
 
 	var vt = request.query.vt;
 	if(vt) {
@@ -123,26 +95,9 @@ exports.index = function(request, response) {
 exports.topic = function(request, response) {
 	// log.info("Web请求：" + require('util').inspect(request));
 
-	var data = {
-		host: config.host,
-		catg: 'index',
-		title: '最新 Java/Node.js/Spring/MySQL/数据库 技术博客',
-		url: request.path,
-
-		md5: function(text) {
-			return require('crypto').createHash('md5').update(text).digest('hex');
-		},
-		catgValue: function(catg) {
-			return enms.topicCatgValue(catg);
-		},
-		dateFormat: function(date) {
-			return dateformat(date, "yyyy-mm-dd");
-		},
-		datetimeFormat: function(date) {
-			return dateformat(date, "yyyy-mm-dd hh:mm:ss");
-		}
-	};
-
+	var data = RUtil.front_data(request);
+	data.catg = 'index';
+	
 	var vt = request.query.vt;
 	if(vt) {
 		data.vclean = (vt === "clean");
