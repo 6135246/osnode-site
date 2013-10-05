@@ -5,9 +5,8 @@ var config = require('../config');
 var log = require('../lib/log');
 var Topic = require('../models/topic-admin');
 var Image = require('../models/image');
-var enms = require('../lib/enms');
 var EventProxy = require('eventproxy');
-var dateformat = require('dateformat');
+var RUtil = require('./rutil');
 
 /**
  * 创建相册页面
@@ -15,21 +14,11 @@ var dateformat = require('dateformat');
 exports.create = function(request, response) {
 	// log.info("Web请求：" + require('util').inspect(request));
 	var method = request.method || '';
-	var data = {
-		catg: 'album',
-		title: '创建相册',
-		url: request.path,
-		breadcrumbs: [{
-			label: "管理后台",
-			href: "/admin/topic-manage.html"
-		}, {
-			label: "相册管理",
-			href: "/admin/topic-manage.html?t=album"
-		}, {
-			label: '创建相册'
-		}]
-	};
-
+	var data = RUtil.album_data(request);
+	data.vpage = "album-create";
+	data.title = '创建相册';
+	data.breadcrumbs[2].label = '创建相册';
+	
 	// 表单页面
 	if(method.toUpperCase() === "GET") {
 		response.render('admin/album-create', data);
@@ -69,20 +58,10 @@ exports.update = function(request, response) {
 	// log.info("Web请求：" + require('util').inspect(request));
 	var id = request.params.id;
 	var method = request.method || '';
-	var data = {
-		catg: 'album',
-		title: '编辑相册',
-		url: request.path,
-		breadcrumbs: [{
-			label: "管理后台",
-			href: "/admin/topic-manage.html"
-		}, {
-			label: "相册管理",
-			href: "/admin/topic-manage.html?t=album"
-		}, {
-			label: '编辑相册(' + id + ')'
-		}]
-	};
+	var data = RUtil.album_data(request);
+	data.vpage = "album-manage";
+	data.title = '编辑相册';
+	data.breadcrumbs[2].label = '编辑相册(' + id + ')';
 
 	// 表单页面
 	if(method.toUpperCase() === "GET") {
@@ -124,20 +103,10 @@ exports.update = function(request, response) {
 exports.addImg = function(request, response) {
 	// log.info("Web请求：" + require('util').inspect(request));
 	var id = request.params.id;
-	var data = {
-		catg: 'album',
-		title: '编辑相册',
-		url: request.path,
-		breadcrumbs: [{
-			label: "管理后台",
-			href: "/admin/topic-manage.html"
-		}, {
-			label: "相册管理",
-			href: "/admin/topic-manage.html?t=album"
-		}, {
-			label: '编辑相册(' + id + ')'
-		}]
-	};
+	var data = RUtil.album_data(request);
+	data.vpage = "album-create";
+	data.title = '编辑相册';
+	data.breadcrumbs[2].label = '编辑相册(' + id + ')';
 
 	// 创建请求
 	var image = {};

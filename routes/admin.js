@@ -21,6 +21,7 @@ exports.create = function(request, response) {
 	// log.info("Web请求：" + require('util').inspect(request));
 
 	var data = RUtil.data(request);
+	data.vpage = "topic-create";
 	data.title = '创建主题';
 	data.breadcrumbs[2].label = '创建主题';
 
@@ -38,6 +39,7 @@ exports.update = function(request, response) {
 	// log.info("Web请求：" + require('util').inspect(request));
 
 	var data = RUtil.data(request);
+	data.vpage = "topic-manage";
 	data.title = '编辑主题';
 	data.breadcrumbs[2].label = '编辑主题(' + id + ')';
 
@@ -117,6 +119,7 @@ exports.view = function(request, response) {
 	var tpcId = request.params.id;
 
 	var data = RUtil.data(request);
+	data.vpage = "topic-manage";
 	data.tpcId = tpcId;
 	data.title = '查看主题';
 	data.breadcrumbs[2].label = '查看主题(' + tpcId + ')';
@@ -142,6 +145,7 @@ exports.view = function(request, response) {
  */
 exports.manage = function(request, response) {
 	var data = RUtil.data(request);
+	data.vpage = "topic-manage";
 	data.title = '主题管理';
 	data.breadcrumbs[2].label = '主题管理';
 
@@ -197,4 +201,20 @@ exports.manage = function(request, response) {
 	Topic.findPage(args, function(results) {
 		ep.emit("topics", results);
 	});
+};
+
+/**
+ * 系统参数
+ */
+exports.envargs = function(request, response) {
+	var data = RUtil.data(request);
+	data.vpage = "system-envargs";
+	data.title = '系统管理';
+	data.breadcrumbs[1].label = '系统管理',
+	data.breadcrumbs[1].href = '/admin/system-envargs.html',
+	data.breadcrumbs[2].label = '系统参数';
+	
+	data.config = config;
+	data.env = process.env;
+	
 };
