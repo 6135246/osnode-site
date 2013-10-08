@@ -7,7 +7,17 @@
 <script type="text/javascript">
 	$(document).ready(function() {
 		var ue = UE.getEditor("content");
-
+		
+		$("#btn-clean-style").click(function(e) {
+			e.preventDefault();
+			var content = ue.getContent();
+			// var reg = /(<td)s(?:s*w*?s*=s*".+?")*?s*?(>)/;
+			content = content.replace(/<([a-zA-Z1-6]+)(\s*[^>]*)?>/g, "<$1>")
+			content = content.replace("    ", "	");
+			
+			ue.setContent(content);
+		});
+		
 		$("#topicForm").submit(function(e) {
 			e.preventDefault();
 			jQuery.ajax({
@@ -61,6 +71,7 @@
 	</div>
 	<div class="control-group radius-form-buttons">
 		<div class="pull-right">
+			<button id="btn-clean-style" class="btn">清除样式</button>
 			<button type="submit" class="btn btn-primary">提交保存</button>
 		</div>
 	</div>

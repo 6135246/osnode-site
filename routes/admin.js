@@ -6,7 +6,7 @@ var log = require('../lib/log');
 var Topic = require('../models/topic-admin');
 var EventProxy = require('eventproxy');
 var RUtil = require('./rutil');
-var $ = require('jQuery');
+//var $ = require('jQuery');
 
 /**
  * 后台主页面
@@ -102,18 +102,7 @@ exports.store = function(request, response) {
 		});
 	} else {
 		// log.info("更新主题:\n" + require('util').inspect(topic));
-		
-		log.info("原主题内容:\n" + topic.content);
-		var $doc = $(topic.content);
-		$doc.find("p").removeAttr("style");
-		log.info("原主题内容:\n" + $doc.html());
-		
-		response.json({
-			success: true,
-			bizLog: topic.id
-		});
-		
-		/*
+		// log.info("主题内容:\n" + topic.content);
 		Topic.update(topic, function(results) {
 			log.info("更新主题成功:\n" + require('util').inspect(results));
 
@@ -122,7 +111,6 @@ exports.store = function(request, response) {
 				bizLog: topic.id
 			});
 		});
-		*/
 	}
 };
 
