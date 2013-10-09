@@ -18,6 +18,9 @@ module.exports = {
 	'log_type': 'console',
 	'log_level': 1, // 0-TRACE, 1-DEBUG, 2-INFO, 3-WARN, 4-ERROR, 5-FETAL
 	
+	/* 缓存配置 */
+	'cache_type': 'global',
+	
 	'ads_show': process.env.ADS_SHOW || true,
 	
 	'uploadPath': './public/upload/',
