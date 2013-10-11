@@ -1,3 +1,4 @@
+#!/bin/env node
 /**
  * Module dependencies.
  */
@@ -11,7 +12,8 @@ var app = express();
 // global.host = "http://www.aliapp.com";
 
 // all environments
-app.set('port', process.env.APP_PORT);
+app.set('ip', process.env.OPENSHIFT_NODEJS_IP || "127.0.0.1");
+app.set('port', process.env.APP_PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 // app.use(express.favicon("/favicon.png"));
@@ -85,6 +87,6 @@ app.post('/admin/album-update-:id.html', album.update);
 app.post('/admin/image-create-:id.html', album.addImg);
 
 // 创建服务端
-http.createServer(app).listen(app.get('port'), function() {
-	console.log('启动服务器完成，Web端口: ' + app.get('port'));
+http.createServer(app).listen(app.get('port'), app.get('ip'), function() {
+	console.log('启动服务器完成，IP: '+ app.get('ip') +', Web端口: ' + app.get('port'));
 });
