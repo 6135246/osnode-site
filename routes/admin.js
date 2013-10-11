@@ -6,7 +6,6 @@ var log = require('../lib/log');
 var Topic = require('../models/topic-admin');
 var EventProxy = require('eventproxy');
 var RUtil = require('./rutil');
-//var $ = require('jQuery');
 
 /**
  * 后台主页面
