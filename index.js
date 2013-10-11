@@ -88,5 +88,13 @@ app.post('/admin/image-create-:id.html', album.addImg);
 
 // 创建服务端
 http.createServer(app).listen(app.get('port'), app.get('ip'), function() {
+	console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++');
+	for(key in config) {
+		if(!(typeof (config[key]) == "function")) {
+			console.log(key + '\t=\t' + config[key]);
+		}
+	}
+	console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++');
 	console.log('启动服务器完成，IP: '+ app.get('ip') +', Web端口: ' + app.get('port'));
+	console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++');
 });
