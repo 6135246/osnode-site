@@ -11,6 +11,11 @@ console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++');
 console.log('DB-CONFIG-TYPE: ' + catg);
 
 var config = require('./config-' + catg + '.js');
+for(key in config) {
+	if(!(typeof (config[key]) == "function")) {
+		console.log(key + '\t\t= ' + config[key]);
+	}
+}
 
 module.exports = {
 	/* 静态资源 */
