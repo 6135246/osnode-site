@@ -15,6 +15,7 @@ exports.data = function(request) {
 		vpage: '',
 		catg: '',
 		title: '',
+		config: config,
 		static_host: config.static_host,
 		breadcrumbs: [{
 			label: "管理后台",
@@ -49,6 +50,7 @@ exports.front_data = function(request) {
 	return {
 		url: request.path,
 		title: '最新 Java/Node.js/Spring/MySQL/数据库 技术博客',
+		config: config,
 		static_host: config.static_host,
 		catgValue: function(catg) {
 			return enms.topicCatgValue(catg);
@@ -72,6 +74,7 @@ exports.album_data = function(request) {
 		vpage: '',
 		catg: '',
 		title: '',
+		config: config,
 		static_host: config.static_host,
 		breadcrumbs: [{
 			label: "管理后台",

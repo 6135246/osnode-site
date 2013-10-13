@@ -1,23 +1,30 @@
 #!/bin/env node
+
 /**
  * 应用配置信息
  */
 
-var catg = 'rhc';
+var catg = 'dev';
 if(process.env.BAE_ENV_AK) {
 	catg = 'bae';
+} else if(process.env.OPENSHIFT_GEAR_NAME) {
+	catg = 'rhc';
 }
+
 console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++');
 console.log('DB-CONFIG-TYPE: ' + catg);
 
 var config = require('./config-' + catg + '.js');
 for(key in config) {
 	if(!(typeof (config[key]) == "function")) {
-		console.log(key + '\t\t= ' + config[key]);
+		console.log(key + ' = ' + config[key]);
 	}
 }
 
 module.exports = {
+	/* 是否使用HTTPS */
+	'use_ssl': config['use_ssl'] || false,
+	
 	/* 静态资源 */
 	'static_host': config['static_host'] || 'http://obullxl.github.io',
 	
@@ -31,8 +38,8 @@ module.exports = {
 	'db_conn_limit': 5,
 	
 	/* 日志配置 */
-	'log_type': 'console',
-	'log_level': 1, // 0-TRACE, 1-DEBUG, 2-INFO, 3-WARN, 4-ERROR, 5-FETAL
+	'log_type': config['log_type'] || 'console',
+	'log_level': config['log_level'] || 0, // 0-TRACE, 1-DEBUG, 2-INFO, 3-WARN, 4-ERROR, 5-FETAL
 	
 	/* 缓存配置 */
 	'cache_type': 'global',
