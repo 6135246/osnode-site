@@ -8,7 +8,6 @@ set DB_PORT=3306
 set DB_USER=r631obullxl
 set DB_PASSWD=rd828439b
 
-set ADS_SHOW=true
+set ADS_SHOW=false
 
 node index.js
-

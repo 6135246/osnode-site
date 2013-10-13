@@ -5,6 +5,7 @@
 module.exports = {
 	/* 是否使用HTTPS */
 	'use_ssl': true,
+	'web_protocal': 'https://',
 	
 	/* 静态资源 */
 	'static_host': 'https://' + process.env.OPENSHIFT_APP_DNS,
@@ -18,5 +19,8 @@ module.exports = {
 	
 	/* 日志配置 */
 	'log_type': 'console',
-	'log_level': 3 // 0-TRACE, 1-DEBUG, 2-INFO, 3-WARN, 4-ERROR, 5-FETAL
+	'log_level': 3,
+	
+	/* 广告推荐显示开关 */
+	'ads_show': true
 };

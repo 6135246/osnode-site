@@ -9,9 +9,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="span8">
-				<div class="entry-ads">
-					<% include ./inc/inc-adv01 %>
-				</div>
+				<% include ./inc/inc-adv01 %>
 				<div class="entry">
 					<h2><%= topic.title||'' %></h2>
 					<p class="meta">
@@ -27,9 +25,7 @@
 						<%- topic.content||'' %>
 					</p>
 				</div>
-				<div class="entry-ads">
-					<% include ./inc/inc-adv02 %>
-				</div>
+				<% include ./inc/inc-adv02 %>
 				<% if(!vclean) { %>
 				<div class="comments">
 					<ul class="commentlist">

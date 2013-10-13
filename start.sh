@@ -9,6 +9,6 @@ export DB_PORT=3306
 export DB_USER=r631obullxl
 export DB_PASSWD=rd828439b
 
-export ADS_SHOW=true
+export ADS_SHOW=false
 
 node index.js

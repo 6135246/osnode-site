@@ -5,6 +5,7 @@
 module.exports = {
 	/* 是否使用HTTPS */
 	'use_ssl': false,
+	'web_protocal': 'http://',
 	
 	/* 静态资源 */
 	'static_host': 'http://obullxl.github.io',
@@ -18,5 +19,8 @@ module.exports = {
 	
 	/* 日志配置 */
 	'log_type': 'console',
-	'log_level': 2 // 0-TRACE, 1-DEBUG, 2-INFO, 3-WARN, 4-ERROR, 5-FETAL
+	'log_level': 2,
+	
+	/* 广告推荐显示开关 */
+	'ads_show': true
 };

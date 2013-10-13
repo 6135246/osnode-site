@@ -24,6 +24,7 @@ for(key in config) {
 module.exports = {
 	/* 是否使用HTTPS */
 	'use_ssl': config['use_ssl'] || false,
+	'web_protocal': config['web_protocal'] || 'http://',
 	
 	/* 静态资源 */
 	'static_host': config['static_host'] || 'http://obullxl.github.io',
@@ -44,7 +45,8 @@ module.exports = {
 	/* 缓存配置 */
 	'cache_type': 'global',
 	
-	'ads_show': process.env.ADS_SHOW || true,
+	/* 广告推荐显示开关 */
+	'ads_show': config['ads_show'] || true,
 	
 	'uploadPath': './public/upload/',
 	'pageSize': 30

@@ -5,11 +5,13 @@ OSN开源站点
 
 有问题或建议，请联系：[obullxl@gmail.com](obullxl@gmail.com)，或在百度云引擎演示站点留言：[http://obullxl.duapp.com](http://obullxl.duapp.com)
 
-1、百度云引擎效果：[http://obullxl.duapp.com](http://obullxl.duapp.com)，由于是免费的测试服务器，服务器不是很稳定，有时可能打不开或报错，请刷新一下即可；
+1、OpenShift云效果：[https://obullxl-osnode.rhcloud.com](https://obullxl-osnode.rhcloud.com)，由于是免费的测试服务器，服务器不是很稳定，有时可能打不开或报错，请刷新一下即可；
 
-2、阿里云引擎效果：[http://anode.aliapp.com](http://anode.aliapp.com)，由于是免费的测试服务器，服务器不是很稳定，有时可能打不开或报错，请刷新一下即可；
+2、百度云引擎效果：[http://obullxl.duapp.com](http://obullxl.duapp.com)，由于是免费的测试服务器，服务器不是很稳定，有时可能打不开或报错，请刷新一下即可；
 
-3、在线功能版本发布说明：[http://obullxl.duapp.com/topic-blog-14.html](http://obullxl.duapp.com/topic-blog-14.html)，该页面会持续更新，敬请关注！
+3、阿里云引擎效果：[http://anode.aliapp.com](http://anode.aliapp.com)，由于是免费的测试服务器，服务器不是很稳定，有时可能打不开或报错，请刷新一下即可；
+
+4、在线功能版本发布说明：[http://obullxl.duapp.com/topic-blog-14.html](http://obullxl.duapp.com/topic-blog-14.html)，该页面会持续更新，敬请关注！
 
 OSN使用方法：
 =============
