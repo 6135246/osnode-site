@@ -19,7 +19,7 @@ for(key in config) {
 
 module.exports = {
 	/* 静态资源 */
-	'static_host': process.env.STATIC_HOST || 'http://obullxl.github.io',
+	'static_host': config['static_host'] || 'http://obullxl.github.io',
 	
 	/* 数据库配置参数 */
 	'db_host': config['db_host'] || process.env.DB_HOST,
