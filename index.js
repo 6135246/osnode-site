@@ -22,7 +22,7 @@ app.use(express.bodyParser({
 	uploadDir: config.uploadPath
 }));
 app.use(express.methodOverride());
-app.use(express.cookieParser('aliapp-nodejs'));
+app.use(express.cookieParser('osnode-site'));
 app.use(express.session());
 // 管理员中间件
 app.use("/admin", require("./lib/mware-admin.js")());
@@ -30,6 +30,9 @@ app.use("/admin", require("./lib/mware-admin.js")());
 app.use(app.router);
 app.use("/public", express.static(path.join(__dirname, 'public'), {
 	maxAge: 0
+}));
+app.use("/upload", express.static(path.join(__dirname, 'upload'), {
+	maxAge: 10240000000
 }));
 
 // development only
