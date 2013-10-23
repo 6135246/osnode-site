@@ -3,8 +3,9 @@
  */
 CREATE DATABASE osnode DEFAULT CHARSET=UTF8;
 
-GRANT ALL PRIVILEGES ON misc.* TO 'osnode'@'%' IDENTIFIED BY 'site';
-GRANT ALL PRIVILEGES ON misc.* TO 'osnode'@'localhost' IDENTIFIED BY 'site';
+GRANT ALL PRIVILEGES ON osnode.* TO 'osnode'@'%' IDENTIFIED BY 'site';
+GRANT ALL PRIVILEGES ON osnode.* TO 'osnode'@'localhost' IDENTIFIED BY 'site';
+GRANT ALL PRIVILEGES ON osnode.* TO 'osnode'@'MININT-UM0FAEO' IDENTIFIED BY 'site';
 
 use osnode;
 
