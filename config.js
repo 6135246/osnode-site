@@ -48,6 +48,6 @@ module.exports = {
 	/* 广告推荐显示开关 */
 	'ads_show': config['ads_show'] || true,
 	
-	'uploadPath': './public/upload/',
+	'uploadPath': './upload/',
 	'pageSize': 30
 };
