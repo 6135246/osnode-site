@@ -10,6 +10,30 @@ GRANT ALL PRIVILEGES ON osnode.* TO 'osnode'@'MININT-UM0FAEO' IDENTIFIED BY 'sit
 use osnode;
 
 /**
+ * 配置数据表
+ */
+CREATE TABLE atom_config (
+  catg 	VARCHAR(64) NOT NULL	COMMENT '配置分类',
+  name	VARCHAR(64) NOT NULL	COMMENT 'Key名称',
+  state VARCHAR(20) DEFAULT 'T' COMMENT '状态',
+  value VARCHAR(255) 			COMMENT '配置值',
+  cvalue VARCHAR(255) 			COMMENT '原配置值',
+  gmt_create DATETIME COMMENT '记录创建时间',
+  gmt_modify DATETIME COMMENT '记录修改时间',
+  PRIMARY KEY(catg, name)
+) ENGINE=InnoDB DEFAULT CHARSET=UTF8 COMMENT '参数配置数据表';
+
+/**
+ * 票据数据表
+ */
+CREATE TABLE atom_ticket (
+  name VARCHAR(64) NOT NULL COMMENT '单据名称',
+  ticket BIGINT(20) DEFAULT '1' COMMENT '单据值',
+  stamp BIGINT(20) DEFAULT '0' COMMENT '时间戳',
+  PRIMARY KEY (name)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT '统一单据数据表';
+
+/**
  * 用户数据表
  */
 CREATE TABLE atom_user (
